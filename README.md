@@ -84,7 +84,7 @@ Event example:
 
 --------------------------
 
-## Update a vendor's booth location (PATCH `/v1/vendors/:id)
+## Update a vendor's booth location (PATCH `/v1/vendors/:id`)
 
 Update the booth location for a vendor.
 
@@ -113,7 +113,7 @@ Status code `200`.
 
 ---------------------
 
-## Get a list of vendors for an event (GET `/v1/vendors?eventName=name)`
+## Get a list of vendors for an event (GET `/v1/vendors?eventName=name`)
 
 Returns the list of vendors for the event name specified in the query parameter
 
