@@ -1,5 +1,15 @@
 # Vendors microservice
 
+## Getting started
+1. If you don't have [nvm](https://github.com/nvm-sh/nvm) installed, install that first.
+1. Run `nvm use`. 
+    1. If you get an error like this `N/A: version "lts/fermium -> N/A" is not yet installed.` running the previous command, you'll need to run `nvm install lts/fermium` first.
+    1. Run `nvm use` once that's finished installing.
+
+
+
+--------------------
+
 ENDPOINTS
 
 ```
