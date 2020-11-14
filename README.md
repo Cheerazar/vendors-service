@@ -52,7 +52,14 @@ expDate: string (MM/YY)
 
 ### Returns
 
-Status code `201`.
+#### Success
+Status code `201` upon successful creation of vendor.
+
+#### Error
+
+Returns status code `403` if creating requested vendor would put it over the maximum number of vendors for event.
+
+Returns status code `404` for malformed request.
 
 ### RabbitMQ event broadcast on successful creation
 
@@ -109,7 +116,13 @@ mezzanine (number)
 
 ### Returns
 
+#### Success
+
 Status code `200`.
+
+#### Error
+
+Status code `404`
 
 ---------------------
 
@@ -118,6 +131,8 @@ Status code `200`.
 Returns the list of vendors for the event name specified in the query parameter
 
 ### Returns
+
+#### Success
 
 Status code `200`.
 
@@ -145,13 +160,24 @@ Response body example:
   }
 ]
 ```
+
+#### Error
+
+Status code `404`
+
 ------------------------
 
 ## Get the details of a vendor (GET `/v1/vendors/:id`)
 
-Get the details for the specified vendor.
+Get the details for the specified vendor id.
 
-### Returns:
+### Returns
+
+#### Success
+
+Status code `200`.
+
+Example response body:
 
 ```json
 {
@@ -163,3 +189,7 @@ Get the details for the specified vendor.
   "companyName": "Hogwarts School of Witchcraft and Wizardry"
 }
 ```
+
+#### Error
+
+Status code `404`.
