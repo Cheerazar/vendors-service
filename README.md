@@ -6,6 +6,17 @@
     1. If you get an error like this `N/A: version "lts/fermium -> N/A" is not yet installed.` running the previous command, you'll need to run `nvm install lts/fermium` first.
     1. Run `nvm use` once that's finished installing.
 1. Run `docker run --hostname conf-vendors-db --name conf-vendors-db -e MYSQL_ROOT_PASSWORD=pconf-mso-vendors-db -p 3306:3306 -d mysql:8.0.22` to install mysql
+  Once you have the mysql container installed you'll need to fix an issue with the root password package that's used.
+    1. Run `docker ps` to get the list of containers
+    1. Find the container id for `conf-vendors-db`.
+    1. Run `docker exec -it <container id here> mysql -u root -p`
+    1. Enter the password: `pconf-mso-vendors-db`.
+    1. Run `ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'pconf-mso-vendors-db';`.
+    1. Run `ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'pconf-mso-vendors-db';`.
+    1. Run `SELECT plugin from mysql.user WHERE User = 'root';`
+      * You should see that both rows show `mysql_native_password` in the `plugin` column.
+    1. Run `CREATE DATABASE vendors`. This creates the `vendors` for `typeorm` to interact with.
+    1. Type `\q` to exit the mysql interface.
 1. Run `yarn build`
 1. Run `yarn start`. If you want to specify the port, you can add `PORT_NUMBER=<number here>` to the `start` script in the `package.json`.
     * **Note:** This is served on port `3017` by default.
