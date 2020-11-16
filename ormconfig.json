@@ -7,5 +7,5 @@
   "database": "vendors",
   "synchronize": true,
   "logging": true,
-  "entities": ["src/db/entities/**/*.ts"]
+  "entities": ["dist/db/entities/**/*.js"]
 }

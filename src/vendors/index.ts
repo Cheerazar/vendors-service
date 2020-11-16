@@ -1,13 +1,29 @@
 import { Request, Router } from 'express';
 import { CreateVendorInfo, PatchVendorInfo } from './types';
 import { createVendorData, createVendorDataForEvent } from './stubData';
+import { createVendor } from '../db/createVendor';
+import { processPayment } from '../payments';
 
 export const vendorsRouter = Router();
 
 vendorsRouter.post(
   '/v1/vendors',
-  (req: Request<{}, {}, CreateVendorInfo>, res) => {
-    res.sendStatus(201);
+  async (req: Request<{}, {}, CreateVendorInfo>, res) => {
+    try {
+      const { paymentInfo, ...vendorInfo } = req.body;
+      // Still need to add verifying that creating this vendor won't exceed the limit
+      await createVendor(vendorInfo);
+      await processPayment(paymentInfo);
+      res.sendStatus(201);
+    } catch (error) {
+      if (error.message.includes('ER_NO_DEFAULT_FOR_FIELD')) {
+        return res
+          .status(403)
+          .send('Request body is missing required parameters.');
+      }
+
+      res.sendStatus(404);
+    }
   },
 );
 
