@@ -5,6 +5,7 @@
 1. Run `nvm use`. 
     1. If you get an error like this `N/A: version "lts/fermium -> N/A" is not yet installed.` running the previous command, you'll need to run `nvm install lts/fermium` first.
     1. Run `nvm use` once that's finished installing.
+1. Run `docker run --hostname conf-vendors-db --name conf-vendors-db -e MYSQL_ROOT_PASSWORD=pconf-mso-vendors-db -p 3306:3306 -d mysql:8.0.22` to install mysql
 1. Run `yarn build`
 1. Run `yarn start`. If you want to specify the port, you can add `PORT_NUMBER=<number here>` to the `start` script in the `package.json`.
     * **Note:** This is served on port `3017` by default.

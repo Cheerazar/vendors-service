@@ -3,8 +3,11 @@ import bodyParser from 'body-parser';
 import { app } from './server';
 import { vendorsRouter } from './vendors';
 
-const { PORT_NUMBER = 3017 } = process.env;
+import 'reflect-metadata';
+import { getDbConnection } from './db';
 
+const { PORT_NUMBER = 3017 } = process.env;
+getDbConnection();
 app.use(bodyParser.json());
 app.use(vendorsRouter);
 app.get('/');
