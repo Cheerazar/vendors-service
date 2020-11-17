@@ -16,4 +16,10 @@ export type CreateVendorInfo = Omit<VendorInformation, 'id'> & {
   paymentInfo: PaymentInfo;
 };
 
-export type PatchVendorInfo = Omit<VendorInformation, 'id' | 'companyName'>;
+export type PatchVendorInfo = {
+  boothAssignment?: {
+    boothNumber?: number;
+    mezzanine?: number;
+  };
+  companyName?: string;
+};

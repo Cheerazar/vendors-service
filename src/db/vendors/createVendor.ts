@@ -1,9 +1,9 @@
-import { getDbConnection } from '.';
-import { CreateVendorInfo, VendorInformation } from '../vendors/types';
-import { Vendor } from './entities/vendor';
+import { getDbConnection } from '..';
+import { CreateVendorInfo } from '../../vendors/types';
+import { Vendor } from '../entities/vendor';
 export async function createVendor(
   info: Omit<CreateVendorInfo, 'paymentInfo'>,
-): Promise<void> {
+): Promise<Vendor> {
   const dbConnection = await getDbConnection();
 
   let vendor = new Vendor();
@@ -14,8 +14,7 @@ export async function createVendor(
     vendor.eventName = info.eventName;
     vendor.mezzanine = info.boothAssignment?.mezzanine;
 
-    await dbConnection.manager.save(vendor);
-    console.log(`Vendor has been saved! ${vendor.id}`);
+    return dbConnection.manager.save(vendor);
   } catch (error) {
     throw new Error(`Error creating vendor: ${error.message}`);
   }

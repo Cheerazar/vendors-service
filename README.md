@@ -77,7 +77,7 @@ expDate: string (MM/YY)
 ### Returns
 
 #### Success
-Status code `201` upon successful creation of vendor.
+Status code `201` upon successful creation of vendor and the newly created vendor information.
 
 #### Error
 
@@ -185,6 +185,14 @@ Response body example:
 ]
 ```
 
+If there is no vendors for the event name, it will return:
+
+```json
+{
+  "vendors": null
+}
+```
+
 #### Error
 
 Status code `404`
@@ -211,6 +219,14 @@ Example response body:
     "mezzanine": 2
   },
   "companyName": "Hogwarts School of Witchcraft and Wizardry"
+}
+```
+
+If there is no vendor with that id, it will return:
+
+```json
+{
+  "vendor": null
 }
 ```
 
