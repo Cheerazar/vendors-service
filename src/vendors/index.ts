@@ -5,6 +5,7 @@ import { processPayment } from '../payments';
 import { getVendor } from '../db/vendors/getVendor';
 import { getVendorsForEvent } from '../db/vendors/getVendorsForEvent';
 import { updateVendor } from '../db/vendors/updateVendor';
+import { emitVendorCreated } from '../rabbitmq/vendors/emitVendorCreated';
 
 export const vendorsRouter = Router();
 
@@ -16,6 +17,7 @@ vendorsRouter.post(
       // Still need to add verifying that creating this vendor won't exceed the limit
       const newVendor = await createVendor(vendorInfo);
       await processPayment(paymentInfo);
+      emitVendorCreated(newVendor);
       res.status(201).json(newVendor);
     } catch (error) {
       if (error.message.includes('ER_NO_DEFAULT_FOR_FIELD')) {

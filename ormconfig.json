@@ -1,6 +1,6 @@
 {
   "type": "mysql",
-  "host": "localhost",
+  "host": "vendors-db",
   "port": 3306,
   "username": "root",
   "password": "pconf-mso-vendors-db",

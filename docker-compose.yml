@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  conf-rabbit:
+    container_name: conf-rabbit
+    image: rabbitmq:3
+    restart: always
+    ports:
+      - '5672:5672'
+    expose:
+      - '5672'
+  vendors-db:
+    container_name: vendors-db
+    image: mysql:8.0.22
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: pconf-mso-vendors-db
+      MYSQL_DATABASE: vendors
+    # volumes:
+    #   - ./mysql:/var/lib/mysql/data
+
+  vendors-service:
+    build:
+      context: '.'
+      dockerfile: './Dockerfile'
+    container_name: vendors-service
+    image: node
+    ports:
+      - '3017:3017'
+    expose:
+      - '3017'

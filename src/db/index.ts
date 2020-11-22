@@ -7,6 +7,10 @@ export async function getDbConnection(): Promise<Connection> {
     return dbConnection;
   }
 
-  dbConnection = await createConnection();
+  try {
+    dbConnection = await createConnection();
+  } catch (error) {
+    throw new Error(error);
+  }
   return dbConnection;
 }
