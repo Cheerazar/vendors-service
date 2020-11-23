@@ -1,6 +1,7 @@
 import { getDbConnection } from '..';
 import { CreateVendorInfo } from '../../vendors/types';
 import { Vendor } from '../entities/vendor';
+
 export async function createVendor(
   info: Omit<CreateVendorInfo, 'paymentInfo'>,
 ): Promise<Vendor> {

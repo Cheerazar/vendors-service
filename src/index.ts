@@ -6,8 +6,10 @@ import { vendorsRouter } from './vendors';
 import 'reflect-metadata';
 import { getDbConnection } from './db';
 import { receiveEvents } from './rabbitmq/events/receiveEvents';
+import { receiveLocations } from './rabbitmq/locations/receiveLocations';
 
-// receiveEvents();
+receiveEvents();
+receiveLocations();
 const { PORT_NUMBER = 3017 } = process.env;
 getDbConnection();
 app.use(bodyParser.json());
