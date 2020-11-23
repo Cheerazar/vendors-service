@@ -6,6 +6,7 @@ import { getVendor } from '../db/vendors/getVendor';
 import { getVendorsForEvent } from '../db/vendors/getVendorsForEvent';
 import { updateVendor } from '../db/vendors/updateVendor';
 import { emitVendorCreated } from '../rabbitmq/vendors/emitVendorCreated';
+import { verifyCanCreateNewVendor } from './verifyCanCreateNewVendor';
 
 export const vendorsRouter = Router();
 
@@ -14,7 +15,7 @@ vendorsRouter.post(
   async (req: Request<{}, {}, CreateVendorInfo>, res) => {
     try {
       const { paymentInfo, ...vendorInfo } = req.body;
-      // Still need to add verifying that creating this vendor won't exceed the limit
+      await verifyCanCreateNewVendor(vendorInfo.eventName);
       const newVendor = await createVendor(vendorInfo);
       await processPayment(paymentInfo);
       emitVendorCreated(newVendor);
@@ -24,6 +25,10 @@ vendorsRouter.post(
         return res
           .status(403)
           .send('Request body is missing required parameters.');
+      }
+
+      if (error.message.includes('vendor capacity')) {
+        return res.status(403).send(error.message);
       }
 
       res.sendStatus(404);
