@@ -4,6 +4,7 @@ export async function setUpRabbit() {
   try {
     const connection = await createConnection();
   } catch (error) {
-    console.error(`Error initializing RabbitMQ: ${error.message}`);
+    console.log(`Error initializing RabbitMQ: ${error.message}`);
+    throw error;
   }
 }
